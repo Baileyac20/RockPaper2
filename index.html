@@ -1,0 +1,109 @@
+<html>
+
+	<head>
+		<title>RockPaperScissors</title>
+		<script>
+			var Status
+			var GameStatus
+			var MyChoices = [
+			"rock",
+			"paper",
+			"scissors"
+			]
+			var Rules = {
+			// ME, THEM, WRITE WIN POV "ME"
+			"rock,rock": 0, // Draw
+			"rock,paper": -1, // Lose
+			"rock,scissors": 1, // Win
+			"paper,rock": 1,
+			"paper,paper": 0,
+			"paper,scissors": -1,
+			"scissors,rock": -1,
+			"scissors,paper": 1,
+			"scissors,scissors": 0,
+			}
+			// 0 = YourTurn
+			// 1 = MyTurn
+			// 2 = Result
+			document.addEventListener("DOMContentLoaded", function() {
+				Status = document.getElementById("status");
+				Status.innerHTML = "<h3 style='text-align: center;'>Your Turn</h3>";
+				GameStatus = 0;
+			});
+			function select(obj) {
+				if(GameStatus==0) {
+					var Item = document.getElementById(obj);
+					if(!Item) { alert("ERROR WITH "+Item); return }
+					GameStatus = 1
+					Item.style = "background-color: green;"
+					Status.innerHTML = "<h3 style='text-align: center;'>You chose "+obj+".</h3>";
+					// Delay then choose.
+					setTimeout(function() {
+						var MyChoice = Math.floor(Math.random() * MyChoices.length);
+						MyChoice = MyChoices[MyChoice]
+						document.getElementById(MyChoice).style = "background-color: red;"
+						Status.innerHTML = "<h3 style='text-align: center;'>I choose "+MyChoice+".</h3>";
+						setTimeout(function() {
+							Win = Rules[MyChoice+","+obj]
+							if(Win == 1) {
+								// AI Wins
+								Status.innerHTML = "<h3 style='text-align: center;'>I win!</h3>";
+							} else if (Win == -1) {
+								Status.innerHTML = "<h3 style='text-align: center;'>You win!</h3>";
+							} else {
+								Status.innerHTML = "<h3 style='text-align: center;'>It's a draw.</h3>";
+							}
+							setTimeout(function() {
+								window.location.reload(true)
+							}, 1500)
+						}, 1500)
+					}, 1500)
+
+				}
+			}
+		</script>
+		<style>
+		body {
+			background-color: #23272a;
+			color: #FFFFFF;
+		}
+		.button {
+			background-color: #7289da;
+			width: 100%;
+			color: #FFFFFF;
+			border: none;
+		}
+		#status {
+			background-color: #2c2f33;
+		}
+		</style>
+	</head>
+	<body>
+		<h1 style="text-align: center;"> Rock Paper [2] </h1>
+		<button id="rock" class="button" onclick="select('rock')">
+		Rock
+		</button>
+		<p>
+		
+		</p>
+		<button id="paper" class="button" onclick="select('paper')">
+		Paper
+		</button>
+		<p>
+		
+		</p>
+		<button id="scissors" class="button" onclick="select('scissors')">
+		Scissors
+		</button>
+		
+		<div id="status">
+		<h3 style="text-align: center;">[ LOADING ]</h3>
+		</div> 
+		<hr>
+		<p>
+		Rock Paper [2] was made by Alex.<br>
+		</p>
+		
+	</body>
+
+</html>
